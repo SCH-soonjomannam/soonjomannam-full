@@ -6,4 +6,5 @@ import org.springframework.stereotype.Controller;
 public class MemberController {
 
     // 기능 추가
+    // 추가 2
 }
