@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>순조만남 - 특별한 만남의 시작</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .app-bar {
+            background-color: #d147a3; /* 진한 핑크 */
+            color: white;
+            text-align: left;
+            padding: 15px 20px; /* 왼쪽 여백 추가 */
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+        }
+
+        .slider-container, .info-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-container {
+            background-color: #f8f8f8;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: 300%;
+        }
+
+        .slide {
+            width: 100%;
+            flex: none;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .info-section {
+            background-color: #ffebf2;
+            flex-direction: column;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .info-section h2 {
+            color: #d147a3;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .info-section p {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .download-buttons a {
+            display: inline-block;
+            margin: 10px 5px;
+            padding: 15px 25px;
+            color: #fff;
+            background-color: #ff6f91;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .download-buttons a:hover {
+            background-color: #e6587e;
+        }
+    </style>
+</head>
+<body>
+<div class="app-bar">
+    순조만남
+</div>
+
+<div class="main-content">
+    <div class="slider-container">
+        <div class="slides">
+            <div class="slide"><img src="/images/연애1.jpeg" alt="슬라이드 이미지 1"></div>
+            <div class="slide"><img src="/images/연애2.jpeg" alt="슬라이드 이미지 2"></div>
+            <div class="slide"><img src="/images/연애3.jpeg" alt="슬라이드 이미지 3"></div>
+        </div>
+    </div>
+
+    <div class="info-section">
+        <h2>"순조만남"</h2>
+        <p>특별한 만남을 위해 순조만남에서 새로운 시작을 해보세요.</p>
+        <div class="download-buttons">
+            <a href="/member/login">로그인</a>
+            <a href="/member/signup">회원가입</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    function showSlide(index) {
+        const slideWidth = slides[0].clientWidth;
+        const slidesContainer = document.querySelector('.slides');
+        slidesContainer.style.transform = `translateX(-${index * slideWidth}px)`;
+    }
+
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        showSlide(currentIndex);
+    }
+
+    setInterval(nextSlide, 3000); // 3초마다 슬라이드 전환
+</script>
+</body>
+</html>

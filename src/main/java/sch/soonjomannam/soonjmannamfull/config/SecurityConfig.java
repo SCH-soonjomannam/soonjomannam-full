@@ -10,10 +10,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+import sch.soonjomannam.soonjmannamfull.domain.token.service.TokenService;
+import sch.soonjomannam.soonjmannamfull.filter.JwtAuthenticationFilter;
+import sch.soonjomannam.soonjmannamfull.filter.JwtExceptionFilter;
 
 import java.util.Collections;
 
@@ -21,6 +25,13 @@ import java.util.Collections;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final TokenService tokenService;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -36,8 +47,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> {
                     request.anyRequest().permitAll();
                 })
+                .addFilterBefore(new JwtAuthenticationFilter(tokenService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtExceptionFilter(), JwtAuthenticationFilter.class)
                 .build();
     }
+
+    // filter chain <JWTasdasFilter> -> Userasdasd ->
 
     @Bean
     public BCryptPasswordEncoder memberBCryptPasswordEncoder() {
