@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -23,9 +24,9 @@ public class MemberEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+    private  String username;
     private String email;
-    private File profileImg;
+//    private File profileImg;
 
     @Column(length = 1000)
     private String description;
@@ -42,5 +43,21 @@ public class MemberEntity {
     private LocalDateTime createdAt ;
     private LocalDateTime updatedAt ;
     private String phoneNumber;
+
+    public MemberEntity(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 
 }
